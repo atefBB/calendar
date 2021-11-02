@@ -130,8 +130,8 @@ class AppointmentConfigService {
 	public function findByIdAndUser(int $id, string $userId): AppointmentConfig {
 		try {
 			return $this->mapper->findByIdForUser($id, $userId);
-		} catch (DbException | DoesNotExistException | MultipleObjectsReturnedException $e) {
-			throw new ServiceException('Could not find a record for id', $e->getCode(), $e);
+		} catch (DoesNotExistException $e) {
+			throw new ClientException('Could not find a record for id', $e->getCode(), $e, Http::STATUS_NOT_FOUND);
 		}
 	}
 
